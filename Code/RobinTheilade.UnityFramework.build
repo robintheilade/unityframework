@@ -93,7 +93,12 @@
 			<arg value="/t:Rebuild" />
 			<arg value="/p:Configuration=Debug" />
 		</exec>
-	</target>
+    <exec program="${msBuild}" verbose="true">
+      <arg value="${baseDir}\RobinTheilade.UnityFramework.sln" />
+      <arg value="/t:Rebuild" />
+      <arg value="/p:Configuration=Release" />
+    </exec>
+  </target>
 
 	<target name="pdb2mdb" description="Generates MDB files based on PDB files">
 		<foreach item="File" property="csprojFileName">
@@ -105,36 +110,20 @@
 			<do>
 				<property name="name" value="${path::get-file-name-without-extension(csprojFileName)}"/>
 				<property name="assemblyFileName" value="${name}.dll"/>
-				<property name="binDir" value="${baseDir}\${name}\bin\Debug"/>
-				<exec program=".\Tools\Unity\pdb2mdb\pdb2mdb" verbose="true" commandline="${assemblyFileName}" workingdir="${binDir}" />
-			</do>
+				<property name="binDir" value="${path::get-directory-name(csprojFileName)}"/>
+				<exec program=".\Tools\Unity\pdb2mdb\pdb2mdb" verbose="true" commandline="${assemblyFileName}" workingdir="${binDir}\bin\Debug" />
+        <exec program=".\Tools\Unity\pdb2mdb\pdb2mdb" verbose="true" commandline="${assemblyFileName}" workingdir="${binDir}\bin\Release" />
+      </do>
 		</foreach>
 	</target>
 
 	<target name="compress" description="Compresses the assemblies">
-		<property name="tempDir" value="${path::combine(path::get-temp-path(), path::get-file-name-without-extension(path::get-temp-file-name()))}"/>
-		<foreach item="File" property="csprojFileName">
-			<in>
-				<items>
-					<include name="**/*.csproj"/>
-				</items>
-			</in>
-			<do>
-				<property name="name" value="${path::get-file-name-without-extension(csprojFileName)}"/>
-				<property name="dllFullFileName" value="${baseDir}\${name}\bin\Debug\${name}.dll"/>
-				<property name="mdbFullFileName" value="${baseDir}\${name}\bin\Debug\${name}.dll.mdb"/>
-				<copy file="${dllFullFileName}" todir="${tempDir}"/>
-				<if test="${file::exists(mdbFullFileName)}">
-					<copy file="${mdbFullFileName}" todir="${tempDir}"/>
-				</if>
-			</do>
-		</foreach>
-		<zip comment="Version: ${rth::to-assembly-file-version(now)}" zipfile="${baseDir}/Releases/RobinTheilade.UnityFramework.${rth::to-assembly-file-version(now)}.zip" ziplevel="9">
-			<fileset>
-				<include name="${tempDir}/*"/>
-			</fileset>
-		</zip>
-		<delete dir="${tempDir}"/>
+    <zip comment="Version: ${rth::to-assembly-file-version(now)}" zipfile="${baseDir}/Releases/RobinTheilade.UnityFramework.${rth::to-assembly-file-version(now)}.zip" ziplevel="9">
+      <fileset>
+        <include name="${baseDir}\RobinTheilade*\bin/**RobinTheilade*.dll"/>
+        <include name="${baseDir}\RobinTheilade*\bin/**RobinTheilade*.mdb"/>
+      </fileset>
+    </zip>
 	</target>
 
 </project>
