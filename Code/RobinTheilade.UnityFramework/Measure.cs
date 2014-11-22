@@ -11,9 +11,6 @@ namespace RobinTheilade
         /// <summary>
         /// Measures the time the specified <paramref name="action"/> takes to execute.
         /// </summary>
-        /// <param name="caption">
-        /// The caption of the measurement.
-        /// </param>
         /// <param name="action">
         /// The action to measure.
         /// </param>

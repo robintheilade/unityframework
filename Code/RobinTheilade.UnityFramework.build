@@ -122,6 +122,7 @@
       <fileset>
         <include name="${baseDir}\RobinTheilade*\bin/**RobinTheilade*.dll"/>
         <include name="${baseDir}\RobinTheilade*\bin/**RobinTheilade*.mdb"/>
+        <include name="${baseDir}\RobinTheilade*\bin/**RobinTheilade*.xml"/>
       </fileset>
     </zip>
 	</target>

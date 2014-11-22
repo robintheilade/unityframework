@@ -1,0 +1,42 @@
+Robin.Theilade.UnityFramework
+
+<strong>About</strong>
+<br />
+This framework contains common data structures, objects and methods that are shared across my assets and if you like you may use them in your own projects as well.
+<br />
+<br />
+<strong>Features</strong>
+<br />
+Data structures<br />
+- Quadtree<br />
+Helper Methods<br />
+- Random Vector3's<br />
+- Horizontal/Vertical GUILayout<br />
+- Equal comparison of TreeInstance instances<br />
+- Time measuring of code
+
+<br />
+<br />
+<strong>Why</strong><br />
+During development of a few Unity assets I came to realize that I needed to combine code from the assets into an assembly for better keeping track of versions and since the assets were sharing code it seemed smart to create a framework assembly.
+<br />
+<br />
+
+
+<strong>Links</strong>
+<br />
+Source code<br />https://github.com/robintheilade/unityframework<br /><br />
+Unity Asset Store<br />Coming soon<br /><br />
+Unity Forum<br />Coming soon<br /><br />
+
+ 2014.11.22.1526
+    Initial release
+    Quadtree data structure
+    GUILayout horizontal/vertical helper methods
+    Random Vector3 helper methods
+    TreeInstance helper comparsion method
+    Time measuring of code method
+
+
+
+Category: Scripting

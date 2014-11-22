@@ -24,3 +24,4 @@ sysinfo.txt
 /Code/RobinTheilade.UnityFramework/bin/Debug
 /Code/RobinTheilade.UnityFramework/bin
 /Code/RobinTheilade.UnityFramework.Editor/bin
+*.userprefs

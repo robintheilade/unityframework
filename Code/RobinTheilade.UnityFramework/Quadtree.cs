@@ -15,14 +15,14 @@ namespace RobinTheilade
     public class Quadtree<T>
     {
         /// <summary>
-        /// The maximum number of nodes per region.
+        /// The maximum number of nodes per tree.
         /// </summary>
-        public const int REGION_CAPACITY = 4;
+        private readonly int nodeCapacity = 32;
 
         /// <summary>
         /// The nodes inside this region.
         /// </summary>
-        private readonly List<QuadtreeNode> nodes = new List<QuadtreeNode>(REGION_CAPACITY);
+        private readonly List<QuadtreeNode> nodes;
 
         /// <summary>
         /// The child trees inside this region.
@@ -49,9 +49,18 @@ namespace RobinTheilade
         /// <param name="boundaries">
         /// The boundaries of the region.
         /// </param>
-        public Quadtree(Rect boundaries)
+        /// <param name="nodeCapacity">
+        /// The maximum number of nodes per tree.
+        /// If the amount of nodes exceeds the tree will be subdivided into 4 sub trees.
+        /// A value of 32 seems fine in terms of insert and remove speed.
+        /// A value greater than 32 improves insert speed but slows down remove speed.
+        /// </param>
+        public Quadtree(Rect boundaries, int nodeCapacity = 32)
         {
             this.boundaries = boundaries;
+            this.nodeCapacity = nodeCapacity;
+
+            this.nodes = new List<QuadtreeNode>(nodeCapacity);
         }
 
         /// <summary>
@@ -73,7 +82,8 @@ namespace RobinTheilade
         public bool Insert(float x, float y, T value)
         {
             var position = new Vector2(x, y);
-            return this.Insert(position, value);
+            var node = new QuadtreeNode(position, value);
+            return this.Insert(node);
         }
 
         /// <summary>
@@ -114,18 +124,38 @@ namespace RobinTheilade
 
             if (this.children != null)
             {
-                for (var index = 0; index < this.children.Length; index++)
+                Quadtree<T> child;
+                if (node.Position.y < this.children[2].boundaries.yMin)
                 {
-                    var child = this.children[index];
-                    if (child.Insert(node))
+                    if (node.Position.x < this.children[1].boundaries.xMin)
                     {
-                        this.Count++;
-                        return true;
+                        child = this.children[0];
                     }
+                    else
+                    {
+                        child = this.children[1];
+                    }
+                }
+                else
+                {
+                    if (node.Position.x < this.children[1].boundaries.xMin)
+                    {
+                        child = this.children[2];
+                    }
+                    else
+                    {
+                        child = this.children[3];
+                    }
+                }
+
+                if (child.Insert(node))
+                {
+                    this.Count++;
+                    return true;
                 }
             }
 
-            if (this.nodes.Count < REGION_CAPACITY)
+            if (this.nodes.Count < this.nodeCapacity)
             {
                 this.nodes.Add(node);
                 this.Count++;
@@ -189,8 +219,8 @@ namespace RobinTheilade
         /// <param name="x">
         /// The X component of the value's position.
         /// </param>
-        /// <param name="y">
-        /// The y component of the value's position.
+        /// <param name="z">
+        /// The Z component of the value's position.
         /// </param>
         /// <param name="value">
         /// The value to remove.
@@ -233,18 +263,37 @@ namespace RobinTheilade
             {
                 var isRemoved = false;
 
-                for (var index = 0; index < this.children.Length; index++)
+                Quadtree<T> child;
+                if (position.y < this.children[2].boundaries.yMin)
                 {
-                    var child = this.children[index];
-                    if (!isRemoved && child.Remove(position, value))
+                    if (position.x < this.children[1].boundaries.xMin)
                     {
-                        isRemoved = true;
-                        this.Count--;
-                        break;
+                        child = this.children[0];
+                    }
+                    else
+                    {
+                        child = this.children[1];
+                    }
+                }
+                else
+                {
+                    if (position.x < this.children[1].boundaries.xMin)
+                    {
+                        child = this.children[2];
+                    }
+                    else
+                    {
+                        child = this.children[3];
                     }
                 }
 
-                if (this.Count <= REGION_CAPACITY)
+                if (child.Remove(position, value))
+                {
+                    isRemoved = true;
+                    this.Count--;
+                }
+
+                if (this.Count <= this.nodeCapacity)
                 {
                     this.Combine();
                 }
