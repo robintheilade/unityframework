@@ -43,7 +43,19 @@ namespace RobinTheilade
             private set;
         }
 
-        /// <summary>
+		/// <summary>
+		/// Initializes a new instance of the <see cref="T:Quadtree`1"/> class.
+		/// </summary>
+		/// <param name="boundaries">
+		/// The boundaries of the region.
+		/// </param>
+		public Quadtree(Rect boundaries)
+			: this(boundaries, 32)
+		{
+			// do nothing
+		}
+
+		/// <summary>
         /// Initializes a new instance of the <see cref="T:Quadtree`1"/> class.
         /// </summary>
         /// <param name="boundaries">
@@ -55,7 +67,7 @@ namespace RobinTheilade
         /// A value of 32 seems fine in terms of insert and remove speed.
         /// A value greater than 32 improves insert speed but slows down remove speed.
         /// </param>
-        public Quadtree(Rect boundaries, int nodeCapacity = 32)
+        public Quadtree(Rect boundaries, int nodeCapacity)
         {
             this.boundaries = boundaries;
             this.nodeCapacity = nodeCapacity;
