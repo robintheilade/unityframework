@@ -20,8 +20,14 @@ namespace RobinTheilade.UnityFramework
         public static void Vertical(Action action, params GUILayoutOption[] options)
         {
             GUILayout.BeginVertical(options);
-            action();
-            GUILayout.EndVertical();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndVertical();
+            }
         }
 
         /// <summary>
@@ -39,8 +45,14 @@ namespace RobinTheilade.UnityFramework
         public static void Vertical(Action action, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginVertical(style, options);
-            action();
-            GUILayout.EndVertical();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndVertical();
+            }
         }
 
         /// <summary>
@@ -61,8 +73,14 @@ namespace RobinTheilade.UnityFramework
         public static void Vertical(Action action, GUIContent content, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginVertical(content, style, options);
-            action();
-            GUILayout.EndVertical();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndVertical();
+            }
         }
 
         /// <summary>
@@ -83,8 +101,14 @@ namespace RobinTheilade.UnityFramework
         public static void Vertical(Action action, string text, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginVertical(text, style, options);
-            action();
-            GUILayout.EndVertical();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndVertical();
+            }
         }
 
         /// <summary>
@@ -105,8 +129,14 @@ namespace RobinTheilade.UnityFramework
         public static void Vertical(Action action, Texture2D image, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginVertical(image, style, options);
-            action();
-            GUILayout.EndVertical();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndVertical();
+            }
         }
     }
 }

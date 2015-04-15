@@ -20,8 +20,14 @@ namespace RobinTheilade.UnityFramework
         public static void Horizontal(Action action, params GUILayoutOption[] options)
         {
             GUILayout.BeginHorizontal(options);
-            action();
-            GUILayout.EndHorizontal();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndHorizontal();
+            }
         }
 
         /// <summary>
@@ -39,8 +45,14 @@ namespace RobinTheilade.UnityFramework
         public static void Horizontal(Action action, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginHorizontal(style, options);
-            action();
-            GUILayout.EndHorizontal();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndHorizontal();
+            }
         }
 
         /// <summary>
@@ -61,8 +73,14 @@ namespace RobinTheilade.UnityFramework
         public static void Horizontal(Action action, GUIContent content, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginHorizontal(content, style, options);
-            action();
-            GUILayout.EndHorizontal();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndHorizontal();
+            }
         }
 
         /// <summary>
@@ -83,8 +101,14 @@ namespace RobinTheilade.UnityFramework
         public static void Horizontal(Action action, string text, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginHorizontal(text, style, options);
-            action();
-            GUILayout.EndHorizontal();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndHorizontal();
+            }
         }
 
         /// <summary>
@@ -105,8 +129,14 @@ namespace RobinTheilade.UnityFramework
         public static void Horizontal(Action action, Texture2D image, GUIStyle style, params GUILayoutOption[] options)
         {
             GUILayout.BeginHorizontal(image, style, options);
-            action();
-            GUILayout.EndHorizontal();
+            try
+            {
+                action();
+            }
+            finally
+            {
+                GUILayout.EndHorizontal();
+            }
         }
     }
 }
